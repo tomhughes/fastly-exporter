@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	_ "net/http/pprof"
 	"net/url"
 	"os"
 	"os/signal"
@@ -135,11 +136,10 @@ func main() {
 	}
 	{
 		// Serve Prometheus metrics over HTTP.
-		mux := http.NewServeMux()
-		mux.Handle(promURL.Path, promhttp.Handler())
+		http.Handle(promURL.Path, promhttp.Handler())
 		server := http.Server{
 			Addr:    promURL.Host,
-			Handler: mux,
+			Handler: http.DefaultServeMux,
 		}
 		g.Add(func() error {
 			return server.ListenAndServe()
