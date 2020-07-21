@@ -80,7 +80,6 @@ type Metrics struct {
 	MissRespBodyBytes                    *prometheus.CounterVec
 	MissSubCountTotal                    *prometheus.CounterVec
 	MissSubTimeTotal                     *prometheus.CounterVec
-	MissTime                             *prometheus.CounterVec
 	MissTimeTotal                        *prometheus.CounterVec
 	ObjectSizeBytes                      *prometheus.HistogramVec
 	ObjectSizeOther                      *prometheus.CounterVec
@@ -107,7 +106,6 @@ type Metrics struct {
 	PassRespBodyBytes                    *prometheus.CounterVec
 	PassSubCount                         *prometheus.CounterVec
 	PassSubTime                          *prometheus.CounterVec
-	PassTime                             *prometheus.CounterVec
 	PassTimeTotal                        *prometheus.CounterVec
 	PCITotal                             *prometheus.CounterVec
 	PipeSubCount                         *prometheus.CounterVec
@@ -135,8 +133,6 @@ type Metrics struct {
 	ShieldRespHeaderBytesTotal           *prometheus.CounterVec
 	ShieldRevalidations                  *prometheus.CounterVec
 	ShieldTotal                          *prometheus.CounterVec
-	Status206                            *prometheus.CounterVec
-	Status429                            *prometheus.CounterVec
 	StatusCodeTotal                      *prometheus.CounterVec
 	StatusGroupTotal                     *prometheus.CounterVec
 	SynthsTotal                          *prometheus.CounterVec
@@ -174,10 +170,10 @@ func NewMetrics(namespace, subsystem string, nameFilter filter.Filter, r prometh
 	m.AttackRespSynthBytesTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "attack_resp_synth_bytes_total", Help: "Total count of 'attack' classified synth responses, in bytes."}, []string{"service_id", "service_name", "datacenter"})
 	m.BackendReqBodyBytes = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "bereq_body_bytes", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.BackendReqHeaderBytesTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "bereq_header_bytes_total", Help: "Total size of backend headers, in bytes."}, []string{"service_id", "service_name", "datacenter"})
-	m.Billed = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "billed", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
+	m.Billed = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "billed_total", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.BilledBodyBytesTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "billed_body_bytes_total", Help: "Total count of billed bodies, in bytes."}, []string{"service_id", "service_name", "datacenter"})
 	m.BilledHeaderBytesTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "billed_header_bytes_total", Help: "Total count of billed headers, in bytes."}, []string{"service_id", "service_name", "datacenter"})
-	m.Blacklisted = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "blacklist", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
+	m.Blacklisted = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "blacklist_total", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.BodySizeTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "body_size_total", Help: "Total size of bodies, in bytes."}, []string{"service_id", "service_name", "datacenter"})
 	m.DeliverSubCountTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "deliver_sub_count_total", Help: "Total deliver sub count."}, []string{"service_id", "service_name", "datacenter"})
 	m.DeliverSubTimeTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "deliver_sub_time_total", Help: "Total deliver sub time."}, []string{"service_id", "service_name", "datacenter"})
@@ -186,7 +182,7 @@ func NewMetrics(namespace, subsystem string, nameFilter filter.Filter, r prometh
 	m.EdgeRespHeaderBytes = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "edge_resp_header_bytes", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.ErrorsTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "errors_total", Help: "Total count of errors."}, []string{"service_id", "service_name", "datacenter"})
 	m.ErrorSubCount = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "error_sub_count", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
-	m.ErrorSubTime = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "error_sub_time", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
+	m.ErrorSubTime = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "error_sub_time_total", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.FetchSubCountTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "fetch_sub_count_total", Help: "Total fetch sub count."}, []string{"service_id", "service_name", "datacenter"})
 	m.FetchSubTimeTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "fetch_sub_time_total", Help: "Total fetch sub time."}, []string{"service_id", "service_name", "datacenter"})
 	m.HashSubCountTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "hash_sub_count_total", Help: "Total hash sub count."}, []string{"service_id", "service_name", "datacenter"})
@@ -223,7 +219,6 @@ func NewMetrics(namespace, subsystem string, nameFilter filter.Filter, r prometh
 	m.MissRespBodyBytes = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "miss_resp_body_bytes", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.MissSubCountTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "miss_sub_count_total", Help: "Total miss sub count."}, []string{"service_id", "service_name", "datacenter"})
 	m.MissSubTimeTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "miss_sub_time_total", Help: "Total miss sub time."}, []string{"service_id", "service_name", "datacenter"})
-	m.MissTime = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "miss_time_total", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.MissTimeTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "miss_time_total", Help: "Total time spent serving misses."}, []string{"service_id", "service_name", "datacenter"})
 	m.ObjectSizeBytes = prometheus.NewHistogramVec(prometheus.HistogramOpts{Namespace: namespace, Subsystem: subsystem, Name: "object_size_bytes", Help: "Size of objects served in bytes.", Buckets: []float64{1 * 1024, 10 * 1024, 100 * 1024, 1 * 1000 * 1024, 10 * 1000 * 1024, 100 * 1000 * 1024, 1000 * 1000 * 1024}}, []string{"service_id", "service_name", "datacenter"})
 	m.ObjectSizeOther = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "object_size_other_bytes", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
@@ -250,7 +245,7 @@ func NewMetrics(namespace, subsystem string, nameFilter filter.Filter, r prometh
 	m.PassRespBodyBytes = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "pass_resp_body_bytes", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.PassSubCount = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "pass_sub_count_total", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.PassSubTime = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "pass_sub_time_total", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
-	m.PassTime = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "pass_time_total", Help: "Total time spent serving passes."}, []string{"service_id", "service_name", "datacenter"})
+	m.PassTimeTotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "pass_time_total", Help: "Total time spent serving passes."}, []string{"service_id", "service_name", "datacenter"})
 	m.PCITotal = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "pci_total", Help: "Total number of PCI requests."}, []string{"service_id", "service_name", "datacenter"})
 	m.PipeSubCount = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "pipe_sub_count_total", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
 	m.PipeSubTime = prometheus.NewCounterVec(prometheus.CounterOpts{Namespace: namespace, Subsystem: subsystem, Name: "pipe_sub_time_total", Help: "TODO"}, []string{"service_id", "service_name", "datacenter"})
