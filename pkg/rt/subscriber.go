@@ -155,7 +155,7 @@ func (s *Subscriber) query(ctx context.Context, ts uint64) (currentName string, 
 		return name, rtResultError, time.Second, ts, nil
 	}
 
-	var rt realtimeResponse
+	var rt RealtimeResponse
 	if err := jsoniterAPI.NewDecoder(resp.Body).Decode(&rt); err != nil {
 		resp.Body.Close()
 		level.Error(s.logger).Log("during", "decode response", "err", err)
@@ -214,30 +214,31 @@ type nopMetadataProvider struct{}
 
 func (nopMetadataProvider) Metadata(string) (string, int, bool) { return "", 0, false }
 
-// realtimeResponse models the response from rt.fastly.com. It can get quite
+// RealtimeResponse models the response from rt.fastly.com. It can get quite
 // large; when there are lots of services being monitored, unmarshaling to this
 // type is the CPU bottleneck of the program.
-type realtimeResponse struct {
+type RealtimeResponse struct {
 	Timestamp uint64 `json:"Timestamp"`
 	Data      []struct {
-		Datacenter map[string]datacenter `json:"datacenter"`
-		Aggregated datacenter            `json:"aggregated"`
+		Datacenter map[string]Datacenter `json:"datacenter"`
+		Aggregated Datacenter            `json:"aggregated"`
 		Recorded   uint64                `json:"recorded"`
 	} `json:"Data"`
 	Error string `json:"error"`
 }
 
-func (resp *realtimeResponse) unmarshalStdlib(data []byte) error {
+func (resp *RealtimeResponse) unmarshalStdlib(data []byte) error {
 	return json.Unmarshal(data, resp)
 }
 
 var jsoniterAPI = jsoniter.ConfigFastest
 
-func (resp *realtimeResponse) unmarshalJsoniter(data []byte) error {
+func (resp *RealtimeResponse) unmarshalJsoniter(data []byte) error {
 	return jsoniterAPI.Unmarshal(data, resp)
 }
 
-type datacenter struct {
+// Datacenter collects statistics for a single datacenter.
+type Datacenter struct {
 	AttackBlockedReqBodyBytes       uint64            `json:"attack_blocked_req_body_bytes"`
 	AttackBlockedReqHeaderBytes     uint64            `json:"attack_blocked_req_header_bytes"`
 	AttackLoggedReqBodyBytes        uint64            `json:"attack_logged_req_body_bytes"`

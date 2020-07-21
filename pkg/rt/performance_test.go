@@ -9,7 +9,7 @@ import (
 // BenchmarkUnmarshal_jsoniter-12  10000   209825 ns/op   292234 B/op   2954 allocs/op
 
 func BenchmarkUnmarshal_stdlib(b *testing.B) {
-	var rt realtimeResponse
+	var rt RealtimeResponse
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		if err := rt.unmarshalStdlib(rtResponseFixtureBig); err != nil {
@@ -19,7 +19,7 @@ func BenchmarkUnmarshal_stdlib(b *testing.B) {
 }
 
 func BenchmarkUnmarshal_jsoniter(b *testing.B) {
-	var rt realtimeResponse
+	var rt RealtimeResponse
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		if err := rt.unmarshalJsoniter(rtResponseFixtureBig); err != nil {

@@ -9,8 +9,8 @@ import (
 
 // process the data from the realtime response, and feed the interpreted results
 // to the Prometheus metrics as observations.
-func process(resp realtimeResponse, serviceID, serviceName, serviceVersion string, m *prom.Metrics) {
-	for _, d := range resp.Data {
+func process(rt RealtimeResponse, serviceID, serviceName, serviceVersion string, m *prom.Metrics) {
+	for _, d := range rt.Data {
 		for datacenter, stats := range d.Datacenter {
 			m.ServiceInfo.WithLabelValues(serviceID, serviceName, serviceVersion).Set(1)
 			m.RequestsTotal.WithLabelValues(serviceID, serviceName, datacenter).Add(float64(stats.Requests))
