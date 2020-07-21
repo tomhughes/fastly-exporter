@@ -248,18 +248,27 @@ type Datacenter struct {
 	AttackReqBodyBytes              uint64            `json:"attack_req_body_bytes"`
 	AttackReqHeaderBytes            uint64            `json:"attack_req_header_bytes"`
 	AttackRespSynthBytes            uint64            `json:"attack_resp_synth_bytes"`
+	BackendReqBodyBytes             uint64            `json:"bereq_body_bytes"`
 	BackendReqHeaderBytes           uint64            `json:"bereq_header_bytes"`
+	Billed                          uint64            `json:"billed"`
 	BilledBodyBytes                 uint64            `json:"billed_body_bytes"`
 	BilledHeaderBytes               uint64            `json:"billed_header_bytes"`
+	Blacklisted                     uint64            `json:"blacklist"`
 	BodySize                        uint64            `json:"body_size"`
 	DeliverSubCount                 uint64            `json:"deliver_sub_count"`
 	DeliverSubTime                  uint64            `json:"deliver_sub_time"`
+	Edge                            uint64            `json:"edge"`
+	EdgeRespBodyBytes               uint64            `json:"edge_resp_body_bytes"`
+	EdgeRespHeaderBytes             uint64            `json:"edge_resp_header_bytes"`
 	Errors                          uint64            `json:"errors"`
+	ErrorSubCount                   uint64            `json:"error_sub_count"`
+	ErrorSubTime                    uint64            `json:"error_sub_time"`
 	FetchSubCount                   uint64            `json:"fetch_sub_count"`
 	FetchSubTime                    uint64            `json:"fetch_sub_time"`
 	HashSubCount                    uint64            `json:"hash_sub_count"`
 	HashSubTime                     uint64            `json:"hash_sub_time"`
 	HeaderSize                      uint64            `json:"header_size"`
+	HitRespBodyBytes                uint64            `json:"hit_resp_body_bytes"`
 	Hits                            uint64            `json:"hits"`
 	HitsTime                        float64           `json:"hits_time"`
 	HitSubCount                     uint64            `json:"hit_sub_count"`
@@ -274,13 +283,23 @@ type Datacenter struct {
 	ImgOptoTransform                uint64            `json:"imgopto_transforms"`
 	ImgOptoTransformRespBodyBytes   uint64            `json:"imgopto_transform_resp_body_bytes"`
 	ImgOptoTransformRespHeaderBytes uint64            `json:"imgopto_transform_resp_header_bytes"`
+	ImgVideo                        uint64            `json:"imgvideo"`
+	ImgVideoFrames                  uint64            `json:"imgvideo_frames"`
+	ImgVideoRespBodyBytes           uint64            `json:"imgvideo_resp_body_bytes"`
+	ImgVideoRespHeaderBytes         uint64            `json:"imgvideo_resp_header_bytes"`
+	ImgVideoShield                  uint64            `json:"imgvideo_shield"`
+	ImgVideoShieldFrames            uint64            `json:"imgvideo_shield_frames"`
+	ImgVideoShieldRespBodyBytes     uint64            `json:"imgvideo_shield_resp_body_bytes"`
+	ImgVideoShieldRespHeaderBytes   uint64            `json:"imgvideo_shield_resp_header_bytes"`
 	IPv6                            uint64            `json:"ipv6"`
+	LogBytes                        uint64            `json:"log_bytes"`
 	Logging                         uint64            `json:"logging"`
 	Misses                          uint64            `json:"miss"`
-	MissHistogram                   map[string]uint64 `json:"miss_histogram"`
+	MissHistogram                   map[string]uint64 `json:"miss_histogram"` // milliseconds
+	MissRespBodyBytes               uint64            `json:"miss_resp_body_bytes"`
 	MissSubCount                    uint64            `json:"miss_sub_count"`
 	MissSubTime                     uint64            `json:"miss_sub_time"`
-	MissTime                        float64           `json:"miss_time"`
+	MissTime                        float64           `json:"miss_time"` // seconds
 	ObjectSize100k                  uint64            `json:"object_size_100k"`
 	ObjectSize100m                  uint64            `json:"object_size_100m"`
 	ObjectSize10k                   uint64            `json:"object_size_10k"`
@@ -288,6 +307,13 @@ type Datacenter struct {
 	ObjectSize1g                    uint64            `json:"object_size_1g"`
 	ObjectSize1k                    uint64            `json:"object_size_1k"`
 	ObjectSize1m                    uint64            `json:"object_size_1m"`
+	ObjectSizeOther                 uint64            `json:"object_size_other"`
+	OriginFetchBodyBytes            uint64            `json:"origin_fetch_body_bytes"`
+	OriginFetches                   uint64            `json:"origin_fetches"`
+	OriginFetchHeaderBytes          uint64            `json:"origin_fetch_header_bytes"`
+	OriginFetchRespBodyBytes        uint64            `json:"origin_fetch_resp_body_bytes"`
+	OriginFetchRespHeaderBytes      uint64            `json:"origin_fetch_resp_header_bytes"`
+	OriginRevalidations             uint64            `json:"origin_revalidations"`
 	OTFP                            uint64            `json:"otfp"`
 	OTFPDeliverTime                 uint64            `json:"otfp_deliver_time"`
 	OTFPManifest                    uint64            `json:"otfp_manifests"`
@@ -302,24 +328,40 @@ type Datacenter struct {
 	OTFPTransformRespHeaderBytes    uint64            `json:"otfp_transform_resp_header_bytes"`
 	OTFPTransformTime               uint64            `json:"otfp_transform_time"`
 	Passes                          uint64            `json:"pass"`
-	PassTime                        float64           `json:"pass_time"`
+	PassRespBodyBytes               uint64            `json:"pass_resp_body_bytes"`
+	PassSubCount                    uint64            `json:"pass_sub_count"`
+	PassSubTime                     uint64            `json:"pass_sub_time"`
+	PassTime                        float64           `json:"pass_time"` // seconds
 	PCI                             uint64            `json:"pci"`
+	PipeSubCount                    uint64            `json:"pipe_sub_count"`
+	PipeSubTime                     uint64            `json:"pipe_sub_time"`
 	PredeliverSubCount              uint64            `json:"predeliver_sub_count"`
 	PredeliverSubTime               uint64            `json:"predeliver_sub_time"`
 	PrehashSubCount                 uint64            `json:"prehash_sub_count"`
 	PrehashSubTime                  uint64            `json:"prehash_sub_time"`
 	RecvSubCount                    uint64            `json:"recv_sub_count"`
 	RecvSubTime                     uint64            `json:"recv_sub_time"`
+	ReqBodyBytes                    uint64            `json:"req_body_bytes"`
 	ReqHeaderBytes                  uint64            `json:"req_header_bytes"`
 	Requests                        uint64            `json:"requests"`
 	RespBodyBytes                   uint64            `json:"resp_body_bytes"`
 	RespHeaderBytes                 uint64            `json:"resp_header_bytes"`
+	Restart                         uint64            `json:"restarts"`
+	SegBlockOriginFetches           uint64            `json:"segblock_origin_fetches"`
+	SegBlockShieldFetches           uint64            `json:"segblock_shield_fetches"`
+	ShieldFetchBodyBytes            uint64            `json:"shield_fetch_body_bytes"`
 	Shield                          uint64            `json:"shield"`
+	ShieldFetches                   uint64            `json:"shield_fetches"`
+	ShieldFetchHeaderBytes          uint64            `json:"shield_fetch_header_bytes"`
+	ShieldFetchRespBodyBytes        uint64            `json:"shield_fetch_resp_body_bytes"`
+	ShieldFetchRespHeaderBytes      uint64            `json:"shield_fetch_resp_header_bytes"`
 	ShieldRespBodyBytes             uint64            `json:"shield_resp_body_bytes"`
 	ShieldRespHeaderBytes           uint64            `json:"shield_resp_header_bytes"`
+	ShieldRevalidations             uint64            `json:"shield_revalidations"`
 	Status1xx                       uint64            `json:"status_1xx"`
 	Status200                       uint64            `json:"status_200"`
 	Status204                       uint64            `json:"status_204"`
+	Status206                       uint64            `json:"status_206"`
 	Status2xx                       uint64            `json:"status_2xx"`
 	Status301                       uint64            `json:"status_301"`
 	Status302                       uint64            `json:"status_302"`
@@ -330,6 +372,7 @@ type Datacenter struct {
 	Status403                       uint64            `json:"status_403"`
 	Status404                       uint64            `json:"status_404"`
 	Status416                       uint64            `json:"status_416"`
+	Status429                       uint64            `json:"status_429"`
 	Status4xx                       uint64            `json:"status_4xx"`
 	Status500                       uint64            `json:"status_500"`
 	Status501                       uint64            `json:"status_501"`
