@@ -27,7 +27,6 @@ type Datacenter struct {
 	AttackRespSynthBytes                       uint64            `json:"attack_resp_synth_bytes"`
 	BackendReqBodyBytes                        uint64            `json:"bereq_body_bytes"`
 	BackendReqHeaderBytes                      uint64            `json:"bereq_header_bytes"`
-	Blacklisted                                uint64            `json:"blacklist"`
 	BodySize                                   uint64            `json:"body_size"`
 	BotChallengeCompleteTokensChecked          uint64            `json:"bot_challenge_complete_tokens_checked"`
 	BotChallengeCompleteTokensDisabled         uint64            `json:"bot_challenge_complete_tokens_disabled"`
@@ -38,10 +37,6 @@ type Datacenter struct {
 	BotChallengesIssued                        uint64            `json:"bot_challenges_issued"`
 	BotChallengesSucceeded                     uint64            `json:"bot_challenges_succeeded"`
 	BotChallengeStarts                         uint64            `json:"bot_challenge_starts"`
-	BotChallengesVerificationAPIDuplicateCount uint64            `json:"bot_challenges_verification_api_duplicate_count"`
-	BotChallengesVerificationAPIExpiredCount   uint64            `json:"bot_challenges_verification_api_expired_count"`
-	BotChallengesVerificationAPIFailureCount   uint64            `json:"bot_challenges_verification_api_failure_count"`
-	BotChallengesVerificationAPISuccessCount   uint64            `json:"bot_challenges_verification_api_success_count"`
 	ComputeBackendReqBodyBytesTotal            uint64            `json:"compute_bereq_body_bytes"`
 	ComputeBackendReqErrorsTotal               uint64            `json:"compute_bereq_errors"`
 	ComputeBackendReqHeaderBytesTotal          uint64            `json:"compute_bereq_header_bytes"`
@@ -143,8 +138,6 @@ type Datacenter struct {
 	ImgOptoShieldRespBodyBytes                 uint64            `json:"imgopto_shield_resp_body_bytes"`
 	ImgOptoShieldRespHeaderBytes               uint64            `json:"imgopto_shield_resp_header_bytes"`
 	ImgOptoTransform                           uint64            `json:"imgopto_transforms"`
-	ImgOptoTransformRespBodyBytes              uint64            `json:"imgopto_transform_resp_body_bytes"`
-	ImgOptoTransformRespHeaderBytes            uint64            `json:"imgopto_transform_resp_header_bytes"`
 	ImgVideo                                   uint64            `json:"imgvideo"`
 	ImgVideoFrames                             uint64            `json:"imgvideo_frames"`
 	ImgVideoRespBodyBytes                      uint64            `json:"imgvideo_resp_body_bytes"`
@@ -192,10 +185,6 @@ type Datacenter struct {
 	OTFPShieldRespBodyBytes                    uint64            `json:"otfp_shield_resp_body_bytes"`
 	OTFPShieldRespHeaderBytes                  uint64            `json:"otfp_shield_resp_header_bytes"`
 	OTFPShieldTime                             uint64            `json:"otfp_shield_time"`
-	OTFPTransform                              uint64            `json:"otfp_transforms"`
-	OTFPTransformRespBodyBytes                 uint64            `json:"otfp_transform_resp_body_bytes"`
-	OTFPTransformRespHeaderBytes               uint64            `json:"otfp_transform_resp_header_bytes"`
-	OTFPTransformTime                          uint64            `json:"otfp_transform_time"`
 	Passes                                     uint64            `json:"pass"`
 	PassRespBodyBytes                          uint64            `json:"pass_resp_body_bytes"`
 	PassSubCount                               uint64            `json:"pass_sub_count"`
@@ -265,7 +254,6 @@ type Datacenter struct {
 	Status5xx                                  uint64            `json:"status_5xx"`
 	Synths                                     uint64            `json:"synth"`
 	TLS                                        uint64            `json:"tls"`
-	TLSHandshakeSentBytes                      uint64            `json:"tls_handshake_sent_bytes"`
 	TLSv10                                     uint64            `json:"tls_v10"`
 	TLSv11                                     uint64            `json:"tls_v11"`
 	TLSv12                                     uint64            `json:"tls_v12"`
