@@ -16,6 +16,28 @@ type Response struct {
 
 // Datacenter models the per-datacenter portion of the rt.fastly.com response.
 type Datacenter struct {
+	AIAEstimatedTimeSavedMilliseconds          uint64            `json:"aia_estimated_time_saved_ms"`
+	AIAOriginUsageTokens                       uint64            `json:"aia_origin_usage_tokens"`
+	AIARequests                                uint64            `json:"aia_requests"`
+	AIAResponseUsageTokens                     uint64            `json:"aia_response_usage_tokens"`
+	AIAStatus1xx                               uint64            `json:"aia_status_1xx"`
+	AIAStatus2xx                               uint64            `json:"aia_status_2xx"`
+	AIAStatus3xx                               uint64            `json:"aia_status_3xx"`
+	AIAStatus4xx                               uint64            `json:"aia_status_4xx"`
+	AIAStatus5xx                               uint64            `json:"aia_status_5xx"`
+	AllEdgeHitRequests                         uint64            `json:"all_edge_hit_requests"`
+	AllEdgeMissRequests                        uint64            `json:"all_edge_miss_requests"`
+	AllErrorRequests                           uint64            `json:"all_error_requests"`
+	AllHitRequests                             uint64            `json:"all_hit_requests"`
+	AllMissRequests                            uint64            `json:"all_miss_requests"`
+	AllPassRequests                            uint64            `json:"all_pass_requests"`
+	AllStatus1xx                               uint64            `json:"all_status_1xx"`
+	AllStatus2xx                               uint64            `json:"all_status_2xx"`
+	AllStatus3xx                               uint64            `json:"all_status_3xx"`
+	AllStatus4xx                               uint64            `json:"all_status_4xx"`
+	AllStatus5xx                               uint64            `json:"all_status_5xx"`
+	AllSynthRequests                           uint64            `json:"all_synth_requests"`
+	APIDiscoveryRequestsCount                  uint64            `json:"api_discovery_requests_count"`
 	AttackBlockedReqBodyBytes                  uint64            `json:"attack_blocked_req_body_bytes"`
 	AttackBlockedReqHeaderBytes                uint64            `json:"attack_blocked_req_header_bytes"`
 	AttackLoggedReqBodyBytes                   uint64            `json:"attack_logged_req_body_bytes"`
@@ -57,6 +79,7 @@ type Datacenter struct {
 	ComputeResourceLimitExceedTotal            uint64            `json:"compute_resource_limit_exceeded"`
 	ComputeRespBodyBytesTotal                  uint64            `json:"compute_resp_body_bytes"`
 	ComputeRespHeaderBytesTotal                uint64            `json:"compute_resp_header_bytes"`
+	ComputeRespStatus103                       uint64            `json:"compute_resp_status_103"`
 	ComputeRespStatus1xx                       uint64            `json:"compute_resp_status_1xx"`
 	ComputeRespStatus200                       uint64            `json:"compute_resp_status_200"`
 	ComputeRespStatus204                       uint64            `json:"compute_resp_status_204"`
@@ -96,6 +119,8 @@ type Datacenter struct {
 	DDOSProtectionRequestsMitigateCount        uint64            `json:"ddos_protection_requests_mitigate_count"`
 	DeliverSubCount                            uint64            `json:"deliver_sub_count"`
 	DeliverSubTime                             uint64            `json:"deliver_sub_time"`
+	DNSBillableResponsesCount                  uint64            `json:"dns_billable_responses_count"`
+	DNSNonbillableResponsesCount               uint64            `json:"dns_nonbillable_responses_count"`
 	Edge                                       uint64            `json:"edge_requests"`
 	EdgeHitRequests                            uint64            `json:"edge_hit_requests"`
 	EdgeHitRespBodyBytes                       uint64            `json:"edge_hit_resp_body_bytes"`
@@ -132,6 +157,7 @@ type Datacenter struct {
 	HTTP2                                      uint64            `json:"http2"`
 	HTTP3                                      uint64            `json:"http3"`
 	ImgOpto                                    uint64            `json:"imgopto"`
+	ImgOptoComputeRequests                     uint64            `json:"imgopto_compute_requests"`
 	ImgOptoRespBodyBytes                       uint64            `json:"imgopto_resp_body_bytes"`
 	ImgOptoRespHeaderBytes                     uint64            `json:"imgopto_resp_header_bytes"`
 	ImgOptoShield                              uint64            `json:"imgopto_shield"`
@@ -157,6 +183,7 @@ type Datacenter struct {
 	MissSubCount                               uint64            `json:"miss_sub_count"`
 	MissSubTime                                uint64            `json:"miss_sub_time"`
 	MissTime                                   float64           `json:"miss_time"`
+	NGWAFBotAnalysisRequestCount               uint64            `json:"ngwaf_bot_analysis_request_count"`
 	ObjectSize100k                             uint64            `json:"object_size_100k"`
 	ObjectSize100m                             uint64            `json:"object_size_100m"`
 	ObjectSize10k                              uint64            `json:"object_size_10k"`
@@ -175,6 +202,7 @@ type Datacenter struct {
 	OriginFetchHeaderBytes                     uint64            `json:"origin_fetch_header_bytes"`
 	OriginFetchRespBodyBytes                   uint64            `json:"origin_fetch_resp_body_bytes"`
 	OriginFetchRespHeaderBytes                 uint64            `json:"origin_fetch_resp_header_bytes"`
+	OriginOffload                              float64           `json:"offload"`
 	OriginRevalidations                        uint64            `json:"origin_revalidations"`
 	OTFP                                       uint64            `json:"otfp"`
 	OTFPDeliverTime                            uint64            `json:"otfp_deliver_time"`
@@ -259,6 +287,7 @@ type Datacenter struct {
 	TLSv12                                     uint64            `json:"tls_v12"`
 	TLSv13                                     uint64            `json:"tls_v13"`
 	Uncacheable                                uint64            `json:"uncacheable"`
+	Upgrade                                    uint64            `json:"upgrade"`
 	Video                                      uint64            `json:"video"`
 	WAFBlocked                                 uint64            `json:"waf_blocked"`
 	WAFLogged                                  uint64            `json:"waf_logged"`
